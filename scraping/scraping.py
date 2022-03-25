@@ -4,11 +4,12 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import csv
+import os
 
 
 headers = {
-    "Accept": "*/*",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
+    "Accept": "[your accept]",# DevTools tab Network tab Headers
+    "User-Agent": "[your user-agent]"#DevTools tab Network tab Headers
 }
 
 def scrapping(url):
@@ -52,6 +53,14 @@ def scrapping(url):
         req = requests.get(url=category_href, headers=headers)
         src = req.text
 
+        dirName = 'data'
+        try:
+            os.makedirs(dirName)    
+            print("Directory " , dirName ,  " Created ")
+        except FileExistsError:
+            print("Directory " , dirName ,  " already exists")  
+
+    
         with open(f"data/{count}_{category_name}.html", "w", encoding="utf-8") as file:
             file.write(src)
 
